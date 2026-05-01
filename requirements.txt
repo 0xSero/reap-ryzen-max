@@ -1,0 +1,25 @@
+# reap-ryzen-max — minimal dependencies
+#
+# CPU / NVIDIA users: just `pip install -r requirements.txt`.
+#
+# AMD Ryzen AI MAX+ 395 / Strix Halo (gfx1151 iGPU) users: the stock
+# `torch==X.Y+rocm6.4` wheels do NOT have kernels for gfx1151 and crash with
+# "HIP error: no kernel image is available". Install the gfx1151 nightly first:
+#
+#     pip install --pre torch \
+#         --index-url https://rocm.nightlies.amd.com/v2/gfx1151/
+#
+# then `pip install -r requirements.txt --no-deps torch_extras` style if you
+# need to keep that wheel pinned. The rest of this file is dtype-agnostic.
+#
+# NVIDIA Mamba-2 users (e.g. Nemotron-3): also install mamba-ssm for fast
+# kernels — the patch_modeling.py script provides a pure-torch fallback so it
+# is optional, just slower:
+#
+#     pip install mamba-ssm causal-conv1d
+#
+torch>=2.4
+transformers>=4.46
+datasets>=2.21
+accelerate>=0.34
+safetensors>=0.4
